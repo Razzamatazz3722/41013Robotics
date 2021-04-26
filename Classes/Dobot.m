@@ -9,12 +9,11 @@ classdef Dobot
     methods
         function obj = Dobot()
             
-            L1 = Link('a',0,'d',0.1519,'alpha',pi/2,'qlim',[-2*pi,2*pi])
-            L2 = Link('a',-0.24365,'d',0,'alpha',0,'qlim',[-2*pi,2*pi])
-            L3 = Link('a',-0.21325,'d',0,'alpha',0,'qlim',[-2*pi,2*pi])
-            L4 = Link('a',0,'d',0.11235,'alpha',pi/2,'qlim',[-2*pi,2*pi])
-            L5 = Link('a',0,'d',0.08535,'alpha',-pi/2,'qlim',[-2*pi,2*pi])
-            L6 = Link('a',0,'d',0.0819,'alpha',0,'qlim',[])
+            L1 = Link('a',0,'d',0.08,'alpha',90,'qlim',[deg2rad(-90),deg2rad(90)])
+            L2 = Link('a',deg2rad(130),'d',0,'alpha',0,'qlim',[0,deg2rad(85)])
+            L3 = Link('a',deg2rad(160),'d',0,'alpha',0,'qlim',[deg2rad(-10),deg2rad(90)])
+            L4 = Link('a',0,'d',0,'alpha',0,'qlim',[deg2rad(-90),deg2rad(90))
+  
             
             obj.model = SerialLink([L1 L2 L3 L4 L5 L6],'name','UR3'); 
             

@@ -24,8 +24,19 @@ imshow(labeledImage, []);  % Show the gray scale image.
 coloredLabels = label2rgb (labeledImage, 'hsv', 'k', 'shuffle'); % pseudo random color labels
 subplot(2, 2, 3);
 imshow(coloredLabels, []);
-%%not working yet
+
+%% not working yet
 blobMeasurements = regionprops(labeledImage, 'basic');
 numberOfBlobs = size(blobMeasurements, 1);
+allAreas = vertcat(blobMeasurements.Area);
+[tmp, index] = max(allAreas)
 
-object = max(blobMeasurements);
+object = blobMeasurements(index)
+
+subplot(2, 2, 4);
+imshow(img);
+hold on;
+rectangle('position',object.BoundingBox, 'EdgeColor', 'g', 'LineWidth', 3);
+plot(object.Centroid(1), object.Centroid(2), '+b')
+
+

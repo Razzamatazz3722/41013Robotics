@@ -3,3 +3,19 @@ Resources
 Dobot Magician
 
 http://ieomsociety.org/toronto2019/papers/436.pdf
+
+
+Image Analysis and object detection
+https://www.youtube.com/watch?v=Dkm6XirJ-jw
+https://au.mathworks.com/matlabcentral/fileexchange/25157-image-segmentation-tutorial
+https://au.mathworks.com/help/images/image-segmentation-using-the-color-thesholder-app.html
+https://au.mathworks.com/help/images/detect-and-measure-circular-objects-in-an-image.html
+https://au.mathworks.com/help/images/
+https://au.mathworks.com/help/supportpkg/raspberrypiio/ref/track-a-green-ball.html
+
+matlab webcam
+https://au.mathworks.com/help/supportpkg/usbwebcams/ug/acquire-images-from-webcams.html
+
+camera calibration - getting the intrinsic and extrinsic values
+http://www.vision.caltech.edu/bouguetj/calib_doc/index.html
+https://www.fdxlabs.com/calculate-x-y-z-real-world-coordinates-from-a-single-camera-using-opencv/

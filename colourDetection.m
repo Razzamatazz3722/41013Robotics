@@ -1,6 +1,15 @@
 clear;
 clf;
-clc;
+
+%set up the webacm
+cam = webcam('USB Camera')
+
+objects = findObjects(cam,1,1);
+
+
+
+%%
+load('cameraParams.mat');
 
 %set up the webacm
 cam = webcam('USB Camera')
@@ -14,7 +23,7 @@ imshow(img);
 img1 = rgb2gray(img); %turn image to grayscale
 red = img(:,:,1); %obtain red values of image
 img1 = imsubtract(red,img1); %remove red from the image or image from the red. not sure yet havent googled. 
-binaryImage = im2bw(img1,0.15);%  will need to calibrate threshold when in correct environment
+binaryImage = im2bw(img1,0.1);%  will need to calibrate threshold when in correct environment
 binaryImage = imfill(binaryImage, 'holes'); %fill in holes in the regions
 
 subplot(2,2,2);
@@ -36,14 +45,59 @@ numberOfBlobs = size(blobMeasurements, 1);
 %difference between the actual object and the other accidental
 %identifications
 allAreas = vertcat(blobMeasurements.Area);
-[tmp, index] = max(allAreas)
-object = blobMeasurements(index)
+[tmp, index] = max(allAreas);
+object = blobMeasurements(index);
 
-%plot the bounding box and the centroid of the object
-subplot(2, 2, 4);
-imshow(img);
-hold on;
-rectangle('position',object.BoundingBox, 'EdgeColor', 'g', 'LineWidth', 3);
-plot(object.Centroid(1), object.Centroid(2), '+b');
+if(length(object) ~= 0)
+
+    %plot the bounding box and the centroid of the object
+    subplot(2, 2, 4);
+    imshow(img);
+    hold on;
+    rectangle('position',object.BoundingBox, 'EdgeColor', 'g', 'LineWidth', 3);
+    plot(object.Centroid(1), object.Centroid(2), '+b');
+    plot(1280/2,960/2, 'r+', 'LineWidth', 3);
+    
+else
+    
+    display("No objects detected");
+    
+end
+
+if(length(object) ~= 0)
+
+    % make K 
+    fx = cameraParams.FocalLength(1);
+    fy = cameraParams.FocalLength(2);
+    cx = cameraParams.PrincipalPoint(1);
+    cy = cameraParams.PrincipalPoint(2);
+
+    k = [fx,0,cx;0,fy,cy;0,0,1];
+
+    floor = 0.65;
+    cup = 0.01;
+    z = floor-cup;
+    UZ = object.Centroid(1) * z;
+    VZ = object.Centroid(2) * z;
+    Z = z;
+
+    pixel_coordinates = [UZ; VZ; Z];
+
+    K_inverse = inv(k);
+
+    object.Centroid;
+
+    world_coord = (K_inverse * pixel_coordinates)
+
+end
+
+
+
+
+
+
+
+
+
 
 

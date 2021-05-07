@@ -16,11 +16,12 @@ function self = Dobot()
     self.GetDobotRobot;
 
     q = zeros(1,4);
-    %self.model.plot(q,'fps',25,'workspace',self.workspace,'scale',0.5);
+    self.model.plot(q,'fps',25,'workspace',self.workspace,'scale',0.5);
 
 end
       
 function GetDobotRobot(self)
+    %DH parameters for the dobot
     L1 = Link('a',0,'d',0.08,'alpha',deg2rad(90),'offset',0,'qlim',[deg2rad(-90),deg2rad(90)]);
     L2 = Link('a',0.135,'d',0,'alpha',0,'qlim',[0,deg2rad(85)]);
     L3 = Link('a',0.16,'d',0,'alpha',0,'qlim',[deg2rad(-90),deg2rad(10)]);

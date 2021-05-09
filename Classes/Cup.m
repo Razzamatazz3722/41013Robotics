@@ -26,7 +26,7 @@ classdef Cup
                 self.cup{i} = self.GetCupModel(['cup',num2str(i)]);
                 
                 %Spawn Bricks
-                self.cup{1}.base = transl(0,0,0) * trotx(-90 * pi/180) * troty(pi/2);
+                self.cup{1}.base = transl(0,0,0.75) * trotx(-90 * pi/180) * troty(pi/2);
                 plot3d(self.cup{i},0,'workspace',self.workspaceDimensions,'view',[-30,30],'delay',0);
             end
             camlight;

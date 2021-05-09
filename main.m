@@ -1,15 +1,16 @@
-clf;
-clear;
-clc; 
+clf; clear; clc; 
 
+%% Setup and Load Workspace:
+% load workspace
+Workspace();
 
-
+% Call the classes for the Cup and Ball
+Cup;
+PingPongBall; 
+Dobot;
 
 %%
-c1 = Cup(transl(1.5,1.5,0), 'RedCup.ply', 'redcup');
-
-
-
+%c1 = Cup(transl(1.5,1.5,0), 'RedCup.ply', 'redcup');
 
 %% Start ROS
 

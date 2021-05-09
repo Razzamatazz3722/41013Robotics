@@ -25,7 +25,7 @@ classdef PingPongBall
                 self.ball{i} = self.GetBallModel(['ball',num2str(i)]);
                 
                 %Spawn Bricks
-                %self.ball{1}.base = transl(0,0.4,0) * trotx(-90 * pi/180) * troty(pi/2);
+                self.ball{1}.base = transl(-0.5,0,0.75) * trotx(-90 * pi/180) * troty(pi/2);
                 plot3d(self.ball{i},0,'workspace',self.workspaceDimensions,'view',[-30,30],'delay',0);
             end
             camlight;

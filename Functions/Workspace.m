@@ -31,6 +31,6 @@ PlaceObject('Table.ply', [0,0,0.01]);
 PlaceObject('FireExtinguisher.ply', [2,2,0.01]);
 PlaceObject('FirstAidKit.ply', [-1.8,2,0.01]);
 PlaceObject('E-Stop.ply', [-1,-0.5,0.75]);
-PlaceObject('RedBall.ply', [-0.5,0,0.75]);
-PlaceObject('RedCupV2.ply', [0,0,0.75]);
+%PlaceObject('RedBall.ply', [-0.5,0,0.75]);
+%PlaceObject('RedCupV2.ply', [0,0,0.75]);
 end

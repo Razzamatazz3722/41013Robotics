@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 clf; clear; clc; 
 
 %% Setup and Load Workspace:
@@ -17,10 +18,30 @@ Dobot;
 clearvars
 rosshutdown
 rosinit
+=======
+%% Workspace Initialisation
+clf;
+clear;
+clc; 
 
-% Subscribe to depth adn RGB messages
-depthRawSub = rossubscriber('/camera/depth/image_raw'); % Depends upon the camera in use (refer to instructions)
-rgbRawSub = rossubscriber('/camera/rgb/image_raw'); % Depends upon the camera in use (refer to instructions)
-pause(2);
-depthImg = readImage(depthRawSub.LatestMessage);
-rgbImg = readImage(rgbRawSub.LatestMessage);
+%% Robot Initialisation
+clearvars
+rosshutdown
+rosinit('10.42.0.1');
+
+% Check Status of the robot
+status = dobotSafetyStatus('/dobot_magician/safety_status');
+if(status ==1)
+    inp = input('Robot is not operational. Do you want to continue? [y,n]: ', 's');
+    if inp=='n'
+        display('program terminated');
+    end
+end
+
+% Initialisation command
+[safetyStatePublisher,safetyStateMsg] = rospublisher('/dobot_magician/target_safety_status');
+safetyStateMsg.Data = 2;
+send(safetyStatePublisher,safetyStateMsg);
+
+>>>>>>> Object_Detection
+

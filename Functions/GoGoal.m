@@ -22,8 +22,8 @@ function qMat = GoGoal(robot, goalLocation, neutralQ, steps)
     
     if goalQ(2) < 0
         goalQ(2) = 0;
-    elseif goalQ > deg2rad(85)
-        goalQ = deg2rad(85);
+    elseif goalQ(2) > deg2rad(85)
+        goalQ(2) = deg2rad(85);
     end
     
     if goalQ(3) < deg2rad(-90)

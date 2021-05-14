@@ -14,7 +14,7 @@ PingPongBall;
 clearvars
 rosshutdown
 rosinit('10.42.0.1');
-%%
+
 bot = OtherDobotFunctions(); 
 pause(2);
 %%
@@ -35,20 +35,43 @@ end
 
 bot.setTargetJointState([0,0,0,0]);
 input('Press any key to continue');
+
+
 bot.setTargetJointState([-1.05,0,0,0]);
 input('Press any key to continue');
 bot.setTargetJointState([-1.05,0.7,0.80,0]);
 input('Press any key to continue');
 bot.setTargetJointState([-1.05,0.7,0.85,0]);
-input('Press any key to continue');
+
+input('To start the airpump, press any key to continue');
 bot.setToolState(1);
 input('Press any key to continue');
 bot.setTargetJointState([0,0,0,0]);
 input('Press any key to continue');
 bot.setToolState(0);
 
-%%
+%% Dancing
+for i=1:4
+    bot.setTargetJointState([0,0,0,0]);
+    %input('Press any key to continue');
+    bot.setTargetJointState([0.5,0,0.8,0]);
+    %input('Press any key to continue');
+end
+for i=1:4
+    bot.setTargetJointState([0,0,0,0]);
+    %input('Press any key to continue');
+    bot.setTargetJointState([-0.5,0,0.8,0]);
+    %input('Press any key to continue');
+end
+for i=1:4
+    bot.setTargetJointState([-0.5,0,-0.1,0]);
+    %input('Press any key to continue');
+    bot.setTargetJointState([0.5,0,-0.1,0]);
+    %input('Press any key to continue');
+end
 
+
+%%
 bot.setToolState(0);
 
 

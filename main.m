@@ -7,7 +7,7 @@ Workspace();
 % Call the classes for the Cup and Ball
 Cup;
 PingPongBall; 
-Dobot;
+%Dobot;
 
 
 %% Robot Initialisation

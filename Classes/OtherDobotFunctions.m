@@ -5,18 +5,50 @@ classdef OtherDobotFunctions
         endEffectorPoseSubscriber;
         toolStateSubscriber;
         safetyStatusSubscriber;
+        
+        targetJointTrajPub;
+        targetJointTrajMsg;
+        
+        targetEndEffectorPub;
+        targetEndEffectorMsg;
+        
+        toolStatePub;
+        toolStateMsg;
+        
+    end
+    
+    properties
+       neutralPosition; 
+        
     end
     
     methods
         function obj = OtherDobotFunctions()
+            rostopic list %for testing
+            obj.safetyStatusSubscriber = rossubscriber('/dobot_magician/safety_status');
             obj.jointStateSubscriber = rossubscriber('/dobot_magician/joint_states'); % Create a ROS Subscriber to the topic joint_states
             obj.endEffectorPoseSubscriber = rossubscriber('/dobot_magician/end_effector_poses'); % Create a ROS Subscriber to the topic end_effector_poses
             obj.toolStateSubscriber = rossubscriber('/dobot_magician/tool_state');
-            obj.safetyStatusSubscriber = rossubscriber('/dobot_magician/safety_status');
+            pause(2);
+           
+            [obj.targetJointTrajPub,obj.targetJointTrajMsg] = rospublisher('/dobot_magician/target_joint_states');
+            [obj.targetEndEffectorPub,obj.targetEndEffectorMsg] = rospublisher('/dobot_magician/target_end_effector_pose');
+            [obj.toolStatePub, obj.toolStateMsg] = rospublisher('/dobot_magician/target_tool_state');
+            
+            %initialisation
+            %obj.initialise;
+            
+        end
+        
+        function initialise(obj)
+            [safetyStatePublisher,safetyStateMsg] = rospublisher('/dobot_magician/target_safety_status');
+            safetyStateMsg.Data = 2;
+            send(safetyStatePublisher,safetyStateMsg);
+            display("DOBOT INITIALISING...");
             pause(2);
         end
         
-        function currentDobotState = getCurrentDobotSafetyStatus(obj)
+        function currentSafetyStatus = getCurrentDobotSafetyStatus(obj)
             currentSafetyStatus = obj.safetyStatusSubscriber.LatestMessage.Data;
             
             if(currentSafetyStatus == 0)
@@ -40,8 +72,9 @@ classdef OtherDobotFunctions
             currentJointState = obj.jointStateSubscriber.LatestMessage.Position % Get the latest message
         end
         
-        function [roll,pitch,yaw] = getCurrentEndEffectorPose(obj)
+        function [currentEndEffectorPosition, currentEndEffectorQuat] = getCurrentEndEffectorPose(obj)
             currentEndEffectorPoseMsg = obj.endEffectorPoseSubscriber.LatestMessage;
+            
             % Extract the position of the end effector from the received message
             currentEndEffectorPosition = [currentEndEffectorPoseMsg.Pose.Position.X,
                                           currentEndEffectorPoseMsg.Pose.Position.Y,
@@ -51,37 +84,36 @@ classdef OtherDobotFunctions
                                       currentEndEffectorPoseMsg.Pose.Orientation.X,
                                       currentEndEffectorPoseMsg.Pose.Orientation.Y,
                                       currentEndEffectorPoseMsg.Pose.Orientation.Z];
-            % Convert from quaternion to euler
-            [roll,pitch,yaw] = quat2eul(currentEndEffectorQuat); 
+                                  
+              
+%             % Convert from quaternion to euler
+%             [roll,pitch,yaw] = quat2eul(currentEndEffectorQuat); 
         end
         
         function setTargetJointState(obj, jointTarget)
             %jointTarget = [0,0.4,0.3,0]; % Remember that the Dobot has 4 joints by default.
-            [targetJointTrajPub,targetJointTrajMsg] = rospublisher('/dobot_magician/target_joint_states');
             trajectoryPoint = rosmessage("trajectory_msgs/JointTrajectoryPoint");
             trajectoryPoint.Positions = jointTarget;
-            targetJointTrajMsg.Points = trajectoryPoint;
+            obj.targetJointTrajMsg.Points = trajectoryPoint;
 
-            send(targetJointTrajPub,targetJointTrajMsg);
+            send(obj.targetJointTrajPub,obj.targetJointTrajMsg);
+            pause(2);
         end
         
         function setTargetEndEffectorState(obj,endEffectorPosition,endEffectorRotation)
             %endEffectorPosition = [0.2,0,0.1];
             %endEffectorRotation = [0,0,0];
-
-            [targetEndEffectorPub,targetEndEffectorMsg] = rospublisher('/dobot_magician/target_end_effector_pose');
-
-            targetEndEffectorMsg.Position.X = endEffectorPosition(1);
-            targetEndEffectorMsg.Position.Y = endEffectorPosition(2);
-            targetEndEffectorMsg.Position.Z = endEffectorPosition(3);
+            obj.targetEndEffectorMsg.Position.X = endEffectorPosition(1);
+            obj.targetEndEffectorMsg.Position.Y = endEffectorPosition(2);
+            obj.targetEndEffectorMsg.Position.Z = endEffectorPosition(3);
 
             qua = eul2quat(endEffectorRotation);
-            targetEndEffectorMsg.Orientation.W = qua(1);
-            targetEndEffectorMsg.Orientation.X = qua(2);
-            targetEndEffectorMsg.Orientation.Y = qua(3);
-            targetEndEffectorMsg.Orientation.Z = qua(4);
+            obj.targetEndEffectorMsg.Orientation.W = qua(1);
+            obj.targetEndEffectorMsg.Orientation.X = qua(2);
+            obj.targetEndEffectorMsg.Orientation.Y = qua(3);
+            obj.targetEndEffectorMsg.Orientation.Z = qua(4);
 
-            send(targetEndEffectorPub,targetEndEffectorMsg); 
+            send(obj.targetEndEffectorPub,obj.targetEndEffectorMsg); 
         end
         
         function currentToolState = getCurrentToolState(obj)
@@ -94,11 +126,19 @@ classdef OtherDobotFunctions
             end
         end
         
-        function setToolState(obj)
+        function setToolState(obj, state)
             % Turn on the tool
-            [toolStatePub, toolStateMsg] = rospublisher('/dobot_magician/target_tool_state');
-            toolStateMsg.Data = [1]; % Send 1 for on and 0 for off 
-            send(toolStatePub,toolStateMsg);
+            [obj.toolStatePub, obj.toolStateMsg] = rospublisher('/dobot_magician/target_tool_state');
+            obj.toolStateMsg.Data = [state]; % Send 1 for on and 0 for off 
+            send(obj.toolStatePub,obj.toolStateMsg);
+        end
+        
+        function goToNeutralPosition(obj)
+            obj.setTargetJointState(obj.neutralPosition);
+        end
+        
+        function setNeutralPosition(obj,position)
+           obj.neutralPosition = position; 
         end
     end
 end

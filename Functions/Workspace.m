@@ -26,7 +26,7 @@ surf([2.3,2.3;2.3,2.3],[-2.3,-2.3;2.3,2.3],[2.3,0.01;2.3,0.01],...
 
 %Import my Safety Features
 PlaceObject('FenceA.ply', [-2.1,2.3,0.01]);
-PlaceObject('FenceB.ply', [-1.9,-2,0.01]);
+PlaceObject('FenceB.ply', [-2.3,-2.1,0.01]);
 PlaceObject('Table.ply', [0,0,0.01]);
 PlaceObject('FireExtinguisher.ply', [2,2,0.01]);
 PlaceObject('FirstAidKit.ply', [-1.8,2,0.01]);

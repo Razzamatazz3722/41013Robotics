@@ -19,6 +19,7 @@ while(1)
     
     if result == 3
         display('safety symbol detected');
+        rmrcRetreat();
         bot.setTargetJointState([0,0,1.2,0]);
         input('press any key to continue');
     else
@@ -75,6 +76,10 @@ function result = checkForSafetySymbol(cam)
         result = 0;
     end
     
+end
+
+function rmrcRetreat()
+
     
-    
+
 end

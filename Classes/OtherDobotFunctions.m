@@ -69,7 +69,8 @@ classdef OtherDobotFunctions
         end
         
         function currentJointState = getCurrentJointState(obj)
-            currentJointState = obj.jointStateSubscriber.LatestMessage.Position % Get the latest message
+            latestJointStateMsg = obj.jointStateSubscriber.LatestMessage % Get the latest message
+            currentJointState = latestJointStateMsg.Position;
         end
         
         function [currentEndEffectorPosition, currentEndEffectorQuat] = getCurrentEndEffectorPose(obj)

@@ -26,7 +26,7 @@ function GetDobotRobot(self)
     %DH parameters for the dobot
     L1 = Link('a',0,'d',0.08,'alpha',deg2rad(90),'offset',deg2rad(180),'qlim',[deg2rad(-90),deg2rad(90)]);
     L2 = Link('a',0.135,'d',0,'alpha',0,'offset',deg2rad(90),'qlim',[0,deg2rad(85)]);
-    L3 = Link('a',0.16,'d',0,'alpha',0,'offset',deg2rad(90),'qlim',[deg2rad(-10),deg2rad(90)]);
+    L3 = Link('a',0.16,'d',0,'alpha',0,'offset',0,'qlim',[deg2rad(-10),deg2rad(90)]);
     L4 = Link('a',0,'d',0,'alpha',deg2rad(90),'offset',deg2rad(180),'qlim',[deg2rad(-90),deg2rad(90)]);
 
     self.model = SerialLink([L1 L2 L3 L4],'name','Dobot');

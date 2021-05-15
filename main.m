@@ -14,7 +14,7 @@ PingPongBall;
 clearvars
 rosshutdown
 rosinit('10.42.0.1');
-
+%%
 bot = OtherDobotFunctions(); 
 pause(2);
 %%
@@ -49,7 +49,7 @@ input('Press any key to continue');
 bot.setTargetJointState([0,0,0,0]);
 input('Press any key to continue');
 bot.setToolState(0);
-<<<<<<< HEAD
+
 %%
 cam = webcam('USB Camera');
 bot.setToolState(1);
@@ -60,7 +60,7 @@ while(1)
     rgbImage = snapshot(cam);
 
     [BW,maskedRGBImage] = createMaskYellow(rgbImage);
-=======
+
 
 %% Dancing
 for i=1:4
@@ -85,7 +85,6 @@ end
 
 %%
 bot.setToolState(0);
->>>>>>> 1df4d24302322878bd136b1367446d791b30894a
 
     BW = imfill(BW, 'holes');
     imshow(BW);

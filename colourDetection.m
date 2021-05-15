@@ -4,8 +4,8 @@ clc;
 % INITIALISATION
 
 %variables
-totalCups = 2;
-totalBalls = 6;
+totalCups = 1;
+totalBalls = 3;
 load('cameraParams.mat');
 
 cameraHeight = 0.65; %m 

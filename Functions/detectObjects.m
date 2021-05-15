@@ -51,6 +51,7 @@ function [Cups, Balls] = detectObjects(totalCups,totalBalls,cam, camParams, came
 
     r_c = returnRed(cups_tmp);
     b_c = returnBlue(cups_tmp);
+    
 
     Cups{1} = r_c;
     Cups{2} = b_c;

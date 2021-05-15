@@ -49,6 +49,18 @@ input('Press any key to continue');
 bot.setTargetJointState([0,0,0,0]);
 input('Press any key to continue');
 bot.setToolState(0);
+<<<<<<< HEAD
+%%
+cam = webcam('USB Camera');
+bot.setToolState(1);
+triangle = [0,0,0];
+while(1)
+
+    
+    rgbImage = snapshot(cam);
+
+    [BW,maskedRGBImage] = createMaskYellow(rgbImage);
+=======
 
 %% Dancing
 for i=1:4
@@ -73,8 +85,50 @@ end
 
 %%
 bot.setToolState(0);
+>>>>>>> 1df4d24302322878bd136b1367446d791b30894a
 
+    BW = imfill(BW, 'holes');
+    imshow(BW);
+    labeledImage = bwlabel(BW, 8);
+    blobMeasurements = regionprops(labeledImage, 'Perimeter', 'Area', 'Centroid', 'BoundingBox');
 
+    for i = 1:length(blobMeasurements)
+        Circularities = [blobMeasurements(i).Perimeter].^2 ./ (4 * pi * [blobMeasurements(i).Area])
+        C = num2cell(Circularities);
+        [blobMeasurements(i).Circularity] = deal(C{:});
+    end
+    for i=1:length(blobMeasurements)
+        circ = blobMeasurements(i).Circularity
+        area = blobMeasurements(i).Area
+        if (blobMeasurements(i).Circularity > 1.18) & (blobMeasurements(i).Circularity < 1.25) & (blobMeasurements(i).Area > 1000)
+            display('object is triangle');
+            triangle = circshift(triangle,-1);
+            triangle(end)=1
+        elseif (blobMeasurements(i).Area > 10000)
+            display('object not triangle');
+            triangle = circshift(triangle,-1);
+            triangle(end)=0
+        end
+        
+        if sum(triangle) == 3
+            bot.setToolState(0);
+            display('break');
+            break;
+        end
+
+    end
+
+  
+    
+%     
+%     if(triangle == 1)
+%         bot.setToolState(0);
+%         break;
+%     end
+    
+end
+
+display('hi');
 
 %% Variable Initialisation
 

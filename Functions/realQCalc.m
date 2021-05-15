@@ -1,7 +1,7 @@
-function realQ = realQCalc(neutralQ)
+function realQ = realQCalc(simQ)
 
-    realQ = neutralQ;
-    realQ(3) = realQ(3) - pi/2 + realQ(2);
+    realQ = simQ;
+    realQ(3) = realQ(3) + realQ(2);
 
 end
 

@@ -2,6 +2,8 @@ function demoSafetySymbol(bot)
 
 %%
 cam = webcam('USB Camera');
+F1 = figure('Name','Safety Symbol detection');
+
 triangle = [0,0,0];
 while(1)
     
@@ -14,8 +16,8 @@ while(1)
     
     if result == 3
         display('safety symbol detected');
-        rmrcRetreat();
         bot.setTargetJointState([0,0,1.2,0]);
+        return;
         input('press any key to continue');
     else
         display('move to random point');
@@ -30,6 +32,7 @@ while(1)
         j4 = 0;
         
         bot.setTargetJointState([j1,j2,j3,j4]);
+        pause(1);
     end
     
 end
@@ -38,14 +41,13 @@ end
 
     function result = checkForSafetySymbol(cam)
         
-        rgbImage = snapshot(cam);
-        
+        %rgbImage = snapshot(cam);
         rgbImage = snapshot(cam);
         
         [BW,maskedRGBImage] = createMaskYellow(rgbImage);
         
         BW = imfill(BW, 'holes');
-        imshow(BW);
+        figure(F1); imshow(BW);
         labeledImage = bwlabel(BW, 8);
         blobMeasurements = regionprops(labeledImage, 'Perimeter', 'Area', 'Centroid', 'BoundingBox');
         

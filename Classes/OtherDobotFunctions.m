@@ -125,7 +125,7 @@ classdef OtherDobotFunctions
             obj.targetJointTrajMsg.Points = trajectoryPoint;
 
             send(obj.targetJointTrajPub,obj.targetJointTrajMsg);
-            pause(2);
+            %pause(2);
         end
         
         function setTargetEndEffectorState(obj,endEffectorPosition,endEffectorRotation)

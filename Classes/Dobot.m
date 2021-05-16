@@ -6,7 +6,7 @@ classdef Dobot < handle
          model;
         
         %>
-        workspace = [-0.1, 1 ,-0.5, 0.5, -0.015, 2];
+        workspace = [-2.3 2.3 -2.3 2.3 0 2.3];
     end
     
     methods
@@ -18,7 +18,7 @@ function self = Dobot()
     %q = zeros(1,4);
     q = deg2rad([0 30 40 0]);
     %self.model.base = transl(-1,0,0.75) *trotz(-90*pi/180);
-    self.model.plot(q,'fps',25,'noarrow','workspace',self.workspace,'scale',0.5);
+    self.model.plot(q,'fps',25,'noarrow','workspace',self.workspace,'scale',0.25);
 
 end
       

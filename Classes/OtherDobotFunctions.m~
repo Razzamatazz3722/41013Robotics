@@ -32,26 +32,26 @@ classdef OtherDobotFunctions
             obj.jointStateSubscriber = rossubscriber('/dobot_magician/joint_states'); % Create a ROS Subscriber to the topic joint_states
             obj.endEffectorPoseSubscriber = rossubscriber('/dobot_magician/end_effector_poses'); % Create a ROS Subscriber to the topic end_effector_poses
             obj.toolStateSubscriber = rossubscriber('/dobot_magician/tool_state');
+ 
+           
             [obj.targetJointTrajPub,obj.targetJointTrajMsg] = rospublisher('/dobot_magician/target_joint_states');
             [obj.targetEndEffectorPub,obj.targetEndEffectorMsg] = rospublisher('/dobot_magician/target_end_effector_pose');
             [obj.toolStatePub, obj.toolStateMsg] = rospublisher('/dobot_magician/target_tool_state');
-            [obj.safetyStatePub,obj.safetyStateMsg] = rospublisher('/dobot_magician/target_safety_status');
+            [
            
             
         end
         
         function initialise(obj)
-            obj.safetyStateMsg.Data = 2;
-            send(obj.safetyStatePub,obj.safetyStateMsg);
+            [safetyStatePublisher,safetyStateMsg] = rospublisher('/dobot_magician/target_safety_status');
+            safetyStateMsg.Data = 2;
+            send(safetyStatePublisher,safetyStateMsg);
             display("DOBOT INITIALISING...");
             pause(2);
         end
         
-        function eStop(obj)
-            obj.safetyStateMsg.Data = 3;
-            send(obj.safetyStatePub,obj.safetyStateMsg);
-            display("ESTOP");
-            pause(2);
+        function setSafetyStatus()
+            
         end
         
         function currentSafetyStatus = getCurrentDobotSafetyStatus(obj)

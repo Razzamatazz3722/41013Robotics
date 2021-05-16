@@ -54,6 +54,27 @@ classdef OtherDobotFunctions
             pause(2);
         end
         
+        function setMode(obj,mode)
+            obj.safetyStateMsg.Data = mode;
+            send(obj.safetyStatePub,obj.safetyStateMsg);
+            if(mode == 0)
+                display("DOBOT STATUS: INVALID");
+            elseif(mode == 1)
+                display("DOBOT STATUS: DISCONNECTED");
+            elseif(mode == 2)
+                display("DOBOT STATUS: INITIALISING");
+            elseif(mode == 3)
+                display("DOBOT STATUS: ESTOPPED");
+            elseif(mode == 4)
+                display("DOBOT STATUS: OPERATIONAL");
+            elseif(mode == 5)
+                display("DOBOT STATUS: PAUSED");
+            elseif(mode == 6)
+                display("DOBOT STATUS: STOPPED");
+            end
+            pause(2);
+        end
+        
         function currentSafetyStatus = getCurrentDobotSafetyStatus(obj)
             currentSafetyStatus = obj.safetyStatusSubscriber.LatestMessage.Data;
             

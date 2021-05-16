@@ -5,9 +5,9 @@ clf; clear; clc;
 Workspace();
 
 % Call the classes for the Cup and Ball
-Cup;
-PingPongBall; 
-%Dobot;
+%Cup;
+%PingPongBall; 
+Dobot;
 
 
 %% Robot Initialisation

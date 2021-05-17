@@ -4,7 +4,6 @@ function demoCollision(dobot, bot, tableHeight, button, type)
 %dobot = Dobot().model; 
 q = zeros(1,4)
 hold on;
-
 %% Create sphere
 sphereCenter = [0.1,0.14,0.25+tableHeight];
 radius = 0.035;

@@ -1,4 +1,4 @@
-function demoCollision(dobot, tableHeight)
+function demoCollision(dobot, bot, tableHeight, button, type)
  
 %% Create 1-link robot
 %dobot = Dobot().model; 
@@ -29,12 +29,26 @@ axis equal
 %% Move Robot
 for q1 = 0:pi/180:pi/2
     q(1) = q1;
-    dobot.animate(q);
-    drawnow();
+    if type == "sim"
+        dobot.animate(q);
+        drawnow();
+    elseif type == "real"
+        bot.setTargetJointState(q);
+        dobot.animate(q);
+        drawnow();
+    end
     isCollision = CollisionCheck(dobot,sphereCenter,radius);
     if isCollision == 1
-        disp('UNSAFE: Robot stopped');
-        break;
+        if type == "sim"
+            disp('UNSAFE: Robot stopped');
+            button.Value = true;
+            break;
+        elseif type == "real"
+            disp('UNSAFE: Robot stopped');
+            bot.eStop();
+            button.Value = true;
+            break;
+        end
     end
 end
 

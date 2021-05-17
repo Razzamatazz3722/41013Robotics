@@ -1,4 +1,4 @@
-function [Cups, Balls] = detectObjects(totalCups,totalBalls,cam, camParams, cameraHeight, ballDiameter,cupHeight, debug)
+function [Cups, Balls, cups_tmp, balls_tmp] = detectObjects(totalCups,totalBalls,cam, camParams, cameraHeight, ballDiameter,cupHeight, debug)
 
     
 
@@ -49,8 +49,8 @@ function [Cups, Balls] = detectObjects(totalCups,totalBalls,cam, camParams, came
     %Balls{2} = g_b;
     %Balls{3} = b_b;
 
-    r_c = returnRed(cups_tmp);
-    b_c = returnBlue(cups_tmp);
+    r_c = returnRed(cups_tmp)
+    b_c = returnBlue(cups_tmp)
     
 
     Cups{1} = r_c;

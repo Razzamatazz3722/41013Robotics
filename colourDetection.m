@@ -4,8 +4,8 @@ clc;
 % INITIALISATION
 
 %variables
-totalCups = 1;
-totalBalls = 3;
+totalCups = 2;
+totalBalls = 2;
 load('cameraParams.mat');
 
 cameraHeight = 0.65; %m 
@@ -15,10 +15,10 @@ cupHeight = 0.1; %m
 %set up the webacm
 cam = webcam('USB Camera')
 
-[Cups, Balls] = detectObjects(totalCups,totalBalls,cam,cameraParams,cameraHeight,ballDiameter,cupHeight,1);
+[Cups, Balls, cups_tmp, balls_tmp] = detectObjects(totalCups,totalBalls,cam,cameraParams,cameraHeight,ballDiameter,cupHeight,1);
 
 % % OBJECT DETECTION
-% 
+%  
 % %detect objects in the image
 % r_obj = findObjects(cam,1,0.15,0);
 % %g_obj = findObjects(cam,2,0.1,1);

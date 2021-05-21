@@ -1,4 +1,5 @@
 function redObjects = returnRed(objectList)
+%return the red objects in the list
     redObjects(1,:) = objectList(1).Coordinates
     initialise = 0;
     for(i=1:length(objectList))

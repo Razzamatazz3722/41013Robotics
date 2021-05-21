@@ -54,17 +54,17 @@ while(1)
 end
 
 
-
+% Function: Check For Intruder
+% 
 function result = checkForIntruder(startLaser, endLaser, base, offset, debug)
 
-    if(debug==1)% print messages
+    if(debug==1)
         display(['x + offset =',num2str(base(1,4) + offset)])
         display(['start laser = ',startLaser(1,1)]);
         display(['x =',num2str(base(1,4) + offset)]);
         display(['start laser = ',startLaser(1,1)]);
     end
 
-    % if object is between lasers, return 1, if not return 0
     if (base(1,4) >= startLaser(1,1) - offset) & ... % x > lineX
             (base(1,4) <=  startLaser(1,1) + offset)
         (base(2,4) >= startLaser(1,2)) & ... % y between laser y's

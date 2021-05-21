@@ -1,3 +1,4 @@
+% Testing for safety symbol
 while(1)
 
 cam = webcam('USB Camera');

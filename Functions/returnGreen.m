@@ -1,5 +1,5 @@
 function greenObjects = returnGreen(objectList)
-    
+  %return the green objects in the list  
     initialise = 0;
 
     for(i=1:length(objectList))
